@@ -8,6 +8,8 @@ import { ToastState } from "./ToastContext";
 
 const user = userEvent.setup();
 
+// ボタン操作で関数を実行できるような仕組みをテストコンポーネントとして作る。
+// 何かの処理によって発火し、アラートが表示されるという実際の動きに近いテストを行える。
 const TestComponent = ({ message }: { message: string }) => {
   const { showToast } = useToastAction(); // <Toast> を表示するためのフック
   return <button onClick={() => showToast({ message })}>show</button>;
@@ -25,6 +27,9 @@ test("showToast を呼び出すと Toast コンポーネントが表示される
   await user.click(screen.getByRole("button"));
   // 表示されていることを確認
   expect(screen.getByRole("alert")).toHaveTextContent(message);
+
+  // 初期値通りstyleがsucceedかどうか確認（追加テスト）
+  expect(screen.getByRole("alert")).toHaveAttribute("data-style", "succeed");
 });
 
 // ### 2.初期値を注入し、表示確認をする

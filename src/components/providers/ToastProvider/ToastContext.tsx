@@ -17,6 +17,8 @@ export const initialState: ToastState = {
 export const ToastStateContext = createContext(initialState);
 
 export type ToastAction = {
+  // omitは第一引数の方から特定のプロパティーを除く
+  // Partialは型のプロパティを必須ではなくする．(undefined)を可能とする．
   showToast: (state?: Partial<Omit<ToastState, "isShown">>) => void;
   hideToast: () => void;
 };
