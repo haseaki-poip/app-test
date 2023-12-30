@@ -5,6 +5,8 @@ import { Header } from "./";
 
 const user = userEvent.setup();
 
+// 毎回テストで行う動作をセットアップ関数として作成
+// test対象の要素と、テスト対象の動作を行う関数を返り値とする
 function setup(url = "/my/posts?page=1") {
   mockRouter.setCurrentUrl(url);
   render(<Header />);
@@ -41,5 +43,9 @@ test("公開ステータスを変更すると、status が変わる", async () =
   await selectOption("下書き");
   expect(mockRouter).toMatchObject({
     query: { page: "1", status: "private" },
+  });
+  await selectOption("すべて");
+  expect(mockRouter).toMatchObject({
+    query: { page: "1", status: "all" },
   });
 });

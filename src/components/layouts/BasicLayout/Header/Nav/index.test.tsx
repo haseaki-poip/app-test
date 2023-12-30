@@ -20,6 +20,7 @@ test.each([
   { url: "/my/posts", name: "My Posts" },
   { url: "/my/posts/123", name: "My Posts" },
   { url: "/my/posts/create", name: "Create Post" },
+  // 文字列の中でも$aaaとすれば引数の変数をテストの名前に使える
 ])("$url では $name がカレントになっている", ({ url, name }) => {
   mockRouter.setCurrentUrl(url);
   render(<Nav onCloseMenu={() => {}} />);
