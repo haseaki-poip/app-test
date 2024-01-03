@@ -29,6 +29,8 @@ export const PostForm = (props: Props) => {
     control,
     formState: { errors, isSubmitting },
   } = useForm<PostInput>({
+    // バリデーションをスキーマする。
+    // スキーマはあらかじめ作っておく
     resolver: zodResolver(createMyPostInputSchema),
   });
   return (

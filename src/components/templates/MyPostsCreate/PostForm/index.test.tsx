@@ -45,6 +45,9 @@ setupMockServer(handleGetMyProfile());
 test("不適正内容で「下書き保存」を試みると、バリデーションエラーが表示される", async () => {
   const { saveAsDraft } = setup();
   await saveAsDraft();
+  // エラメッセージが出るまで時間がかかるため、waitForでまつ
+  // waitForはデフォルトで4.5秒待つ。それ以上待って期待する処理ができない場合はエラーを吐く
+  // optionで待つ時間は変えられる。
   await waitFor(() =>
     expect(
       screen.getByRole("textbox", { name: "記事タイトル" })
@@ -56,6 +59,7 @@ test("不適正内容で「下書き保存」を試みると、onInvalid イベ�
   const { saveAsDraft, onClickSave, onValid, onInvalid } = setup();
   await saveAsDraft();
   expect(onClickSave).toHaveBeenCalled();
+  // スキーマで設定したバリデーションが行われ、エラーが出るためonValidの処理はされず、onInvaidの方が実行される
   expect(onValid).not.toHaveBeenCalled();
   expect(onInvalid).toHaveBeenCalled();
 });
