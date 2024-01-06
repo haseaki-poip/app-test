@@ -4,7 +4,9 @@ import { rest } from "msw";
 import { path } from "..";
 import { createMyPostsData } from "./fixture";
 
+// ある特定のリクエストに対するモックの処理
 export function handleCreateMyPosts(spy?: jest.Mock<any, any>) {
+  // rest.postとすることでpostのリクエストに対応。getのリクエストならばrest.get
   return rest.post(path(), async (req, res, ctx) => {
     const data: ApiMyPosts.PostInput = await req.json();
     spy?.({ body: data, headers: req.headers.get("content-type") });

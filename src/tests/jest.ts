@@ -3,9 +3,13 @@ import userEvent from "@testing-library/user-event";
 import type { RequestHandler } from "msw";
 import { setupServer } from "msw/node";
 
+// 共通のセットアップ関数として定義しておく
 export function setupMockServer(...handlers: RequestHandler[]) {
+  // 可変長数で引数に値を渡す
+  // 複数のレクエストに対するモックサーバーを一度に作成できる。例えば異なるURLなど
   const server = setupServer(...handlers);
   beforeAll(() => server.listen());
+  // テストごとにサーバーを初期化する
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
   return server;

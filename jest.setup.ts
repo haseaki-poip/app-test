@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 import React, { ReactNode } from "react";
+// このインポートがないとjestによるテスト内でfetchを使えない
 import "whatwg-fetch";
 
 global.React = React;

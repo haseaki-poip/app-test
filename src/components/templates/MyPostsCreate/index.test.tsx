@@ -38,7 +38,7 @@ async function setup() {
     selectImage,
   };
 }
-
+// 投稿用のリクエストとプロフィール確認用リクエスト
 setupMockServer(...MyPosts.handlers, ...MyProfile.handlers);
 beforeEach(() => {
   mockUploadImage();
@@ -63,6 +63,7 @@ describe("AlertDialog", () => {
     await selectImage();
     await saveAsPublished();
     await clickButton("いいえ");
+    // alertダイアログはroleで設定してある
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
 
@@ -73,6 +74,7 @@ describe("AlertDialog", () => {
     await saveAsPublished();
     await clickButton("はい");
     await waitFor(() =>
+      // バリデーションエラーが出ているか
       expect(
         screen.getByRole("textbox", { name: "記事タイトル" })
       ).toBeInvalid()
@@ -89,9 +91,9 @@ describe("Toast", () => {
     await selectImage();
     await saveAsPublished();
     await clickButton("はい");
-    await waitFor(() =>
-      expect(screen.getByRole("alert")).toHaveTextContent("保存中…")
-    );
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent("保存中…");
+    });
   });
 
   test("公開に成功した場合「公開に成功しました」が表示される", async () => {
