@@ -35,6 +35,9 @@ export function useUploadImage<T extends FieldValues>({
   onResolved,
   onRejected,
 }: {
+  // Pathは受け取ったTの方のプロパティのリテラル型とすることができる
+  // Tが{name: string; age: number; info: {id: string; type: string}}なら
+  // Path<T>は"name"|"age"|"info.id"|"info.type"というリテラル型
   name: Path<T>;
   defaultImageUrl?: string | null;
   register: UseFormRegister<T>;

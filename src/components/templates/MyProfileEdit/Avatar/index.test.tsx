@@ -24,10 +24,12 @@ test("「写真を変更する」ボタンがある", async () => {
 });
 
 test("画像のアップロードに成功した場合、画像の src 属性が変化する", async () => {
+  // s3にアップロードするAPI連携関数をモックで置き換え
   mockUploadImage();
   render(<TestComponent />);
   expect(screen.getByRole("img").getAttribute("src")).toBeFalsy();
   const { selectImage } = selectImageFile();
+  // 画像を選択するブラウザAPIを模倣したモック処理を行う
   await selectImage();
   await waitFor(() =>
     expect(screen.getByRole("img").getAttribute("src")).toBeTruthy()
